@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f6f5f0">
+  <meta name="description" content="Steady: a gentle, customizable, private toolkit for feelings, routines, communication, calm breaks and learning plans.">
+
+
+
+  <style>
+:root{font-family:Verdana,Arial,system-ui,sans-serif;--bg:#f6f5f0;--paper:#fffefa;--text:#293b39;--muted:#697974;--line:#e7e9e1;--green:#376c60;--green-2:#dbebe2;--green-deep:#264d45;--highlight:#f8e6c0;--coral:#bd725f;--lavender:#eae4f3;--side:#fffefa;--shadow:0 16px 36px rgba(43,65,58,.045);--radius:20px;--scale:1;color-scheme:light}
+:root[data-theme=dark]{--bg:#151f1d;--paper:#1e2b28;--text:#eff7f1;--muted:#b8c7bf;--line:#43544d;--green:#9ed4b9;--green-2:#304840;--green-deep:#cbeada;--highlight:#514631;--coral:#edbaa9;--lavender:#3b354b;--side:#1b2925;--shadow:0 10px 25px rgba(0,0,0,.12);color-scheme:dark}
+:root[data-size=large]{--scale:1.12}:root[data-size=largest]{--scale:1.24}:root[data-contrast=true]{--line:#82988d}:root[data-motion=reduce] *, :root[data-motion=reduce] *::before,:root[data-motion=reduce] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]):not([data-theme=dark]){--bg:#151f1d;--paper:#1e2b28;--text:#eff7f1;--muted:#b8c7bf;--line:#43544d;--green:#9ed4b9;--green-2:#304840;--green-deep:#cbeada;--highlight:#514631;--coral:#edbaa9;--lavender:#3b354b;--side:#1b2925;--shadow:0 10px 25px rgba(0,0,0,.12);color-scheme:dark}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-size:calc(16px * var(--scale));line-height:1.55}button,textarea,input,select{font:inherit;color:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}:focus-visible{outline:3px solid var(--coral);outline-offset:3px}h1,h2,h3,p{margin-top:0}h1{font-family:Georgia,serif;font-size:clamp(2.25rem,4vw,3.65rem);line-height:1.09;letter-spacing:-.038em;margin-bottom:16px}h2{font-family:Georgia,serif;font-size:clamp(1.48rem,2.4vw,1.84rem);line-height:1.2;letter-spacing:-.022em;margin-bottom:8px}h3{font-family:Georgia,serif;font-size:1.28rem;line-height:1.3;margin-bottom:7px}p{margin-bottom:12px}hr{border:0;border-top:1px solid var(--line);margin:26px 0}.skip-link{position:fixed;z-index:100;top:-99px;left:10px;padding:10px;background:var(--paper);color:var(--text)}.skip-link:focus{top:10px}.app-shell{display:flex;min-height:100vh}.sidebar{width:248px;flex-shrink:0;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;padding:29px 15px 24px 22px;border-right:1px solid var(--line);background:var(--side)}.brand{display:flex;gap:12px;align-items:center;padding:0 6px;color:inherit;text-decoration:none}.brand-mark{width:44px;height:44px;border-radius:15px;background:var(--green);color:var(--paper);display:grid;place-items:center;font-size:29px;font-weight:700}.brand strong{display:block;font-family:Georgia,serif;font-size:1.8rem;line-height:1.1;letter-spacing:-.06em}.brand-dot{color:var(--coral)}.brand small{display:block;color:var(--muted);font-size:.68rem;margin-top:2px;white-space:nowrap}.nav-heading,.eyebrow,.hero-kicker{font-weight:700;letter-spacing:.13em;font-size:.65rem}.nav-heading{margin:52px 15px 15px;color:var(--muted)}.nav-list{display:grid;gap:7px}.nav-btn{background:transparent;border:1px solid transparent;width:100%;display:flex;gap:12px;align-items:center;text-align:left;border-radius:12px;padding:12px 13px;font-weight:700;font-size:.88rem;min-height:50px}.nav-icon{min-width:25px;text-align:center;font-size:1.3rem;font-weight:normal}.nav-btn:hover{background:var(--green-2)}.nav-btn.selected{background:var(--green-2);color:var(--green-deep);border-color:var(--line)}.sidebar-spacer{flex:1}.sidebar-footer{border-top:1px solid var(--line);padding-top:16px}.privacy-note{font-size:.71rem;color:var(--muted);padding:18px 10px 0;line-height:1.6}.privacy-note span{color:var(--coral)}.workspace{flex:1;min-width:0}.topbar{height:79px;padding:0 clamp(22px,4vw,66px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:12px}.topbar-left,.topbar-right{display:flex;align-items:center;gap:18px}.topbar .eyebrow{color:var(--muted)}.date-label{font-size:.8rem;color:var(--muted)}.offline-chip{display:inline-flex;align-items:center;gap:8px;color:var(--green-deep);font-size:.72rem;font-weight:700;background:var(--green-2);border-radius:999px;padding:7px 12px}.status-dot{height:7px;width:7px;border-radius:50%;background:var(--green)}.small-round{width:39px;height:39px;border-radius:50%;background:var(--paper);border:1px solid var(--line)}main{max-width:1420px;margin:0 auto;padding:34px clamp(22px,4vw,66px) 24px}.hero{min-height:245px;border-radius:23px;background:#dce9dd;display:flex;justify-content:space-between;align-items:center;padding:35px clamp(25px,4vw,52px);position:relative;overflow:hidden;margin-bottom:25px;isolation:isolate}.hero::before{content:'';position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 72% 25%,rgba(255,255,255,.65),transparent 38%)}.hero>div:first-child{position:relative;z-index:2;max-width:650px}.hero-kicker{color:#4e7969;display:block;margin-bottom:17px}.hero h1{color:#274a41}.hero p{font-size:.91rem;color:#4e6860;max-width:470px;margin-bottom:0}.hero-illustration{height:220px;width:240px;align-self:stretch;position:relative;flex-shrink:0}.illustration-sun{position:absolute;top:-26px;right:57px;width:150px;height:150px;border-radius:50%;background:#f8e5b9;color:#dfb874;display:grid;place-items:center;font-size:100px;transform:rotate(-12deg)}.illustration-hill{position:absolute;bottom:-96px;right:-90px;width:330px;height:185px;border-radius:50%;background:#b6d4c5}.illustration-heart{position:absolute;right:32px;top:95px;color:#bb7f68;font-size:45px;transform:rotate(17deg)}.content-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:24px;align-items:start}.primary-column,.page{min-width:0}.card{border:1px solid var(--line);background:var(--paper);border-radius:var(--radius);padding:27px;box-shadow:var(--shadow);margin-bottom:19px}.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:23px}.card-head p{font-size:.84rem;color:var(--muted);margin-bottom:0;max-width:580px}.eyebrow.accent{color:var(--coral);display:block;margin-bottom:9px}.mini-tag{font-size:.7rem;white-space:nowrap;background:var(--green-2);color:var(--green-deep);border-radius:30px;padding:7px 11px;font-weight:700}.emotion-scene{text-align:center;background:linear-gradient(135deg,var(--bg),var(--green-2));border:1px solid var(--line);border-radius:17px;padding:25px 14px 16px}.emotion-face{font-size:clamp(5rem,13vw,7rem);line-height:1.3}.emotion-prompt{margin:8px 0 0;font-weight:700;font-size:.89rem}.answer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}.btn,.answer-btn,.mood-btn,.phrase-btn,.schedule-controls button,.category-btn{border:1.5px solid var(--line);border-radius:11px;background:var(--paper);min-height:45px;transition:background .15s,border-color .15s;color:var(--text)}.btn{padding:10px 16px;font-size:.84rem;font-weight:700}.btn:hover:not(:disabled),.answer-btn:hover:not(:disabled),.mood-btn:hover,.phrase-btn:hover,.schedule-controls button:hover,.category-btn:hover{border-color:var(--green);background:var(--green-2)}.btn-primary{background:var(--green);border-color:var(--green);color:#fff}@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .btn-primary{color:#172921}}:root[data-theme=dark] .btn-primary{color:#172921}.btn-primary:hover:not(:disabled){filter:brightness(1.07);background:var(--green)}.btn-outline{border-color:var(--line)}.btn-text{border-color:transparent;background:transparent;text-decoration:underline;text-underline-offset:3px}.btn-danger{color:#a64b3f;border-color:#cfaea8}.answer-btn{font-weight:700;padding:14px 8px}.answer-btn.correct{background:var(--green-2);border-color:var(--green)}.answer-btn.incorrect{border-color:var(--coral)}.feedback{min-height:29px;color:var(--green-deep);font-size:.83rem;font-weight:700;padding-top:8px}.actions-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}.mood-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.mood-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:.72rem;font-weight:700;padding:11px 5px}.mood-btn .emoji{font-size:2.05rem}.mood-btn[aria-pressed=true]{border-color:var(--green);background:var(--green-2)}.support-message{background:var(--green-2);padding:14px 16px;border-radius:12px;margin:15px 0;color:var(--green-deep);font-size:.85rem}.quiet{font-size:.75rem;color:var(--muted);line-height:1.7;display:block;margin-top:10px}.side-card{border:1px solid var(--line);border-radius:20px;padding:26px;margin-bottom:19px;background:var(--paper)}.encouragement{background:#f6e8d9;border-color:#f0ddc8;min-height:291px;overflow:hidden;position:relative}.encouragement .eyebrow{color:#a47b5d}.encouragement h3{font-size:1.8rem;color:#5b493f;margin:9px 0 12px}.encouragement p{font-size:.8rem;color:#695b51;max-width:185px}.side-illustration{font-size:72px;line-height:1;color:#c79e7a;margin-bottom:13px}.decorative-lines{color:#cdac8c;font-size:25px;letter-spacing:10px}.tips .eyebrow{color:var(--muted)}.tip-line{display:flex;gap:12px;align-items:flex-start;margin-top:24px}.tip-icon{display:grid;place-items:center;background:var(--green-2);color:var(--green-deep);width:36px;height:36px;flex-shrink:0;border-radius:12px;font-size:1.3rem}.tip-line strong{font-size:.83rem}.tip-line p{font-size:.72rem;color:var(--muted);margin:3px 0 0}.footer{text-align:center;color:var(--muted);font-size:.72rem;padding:32px 0 14px}.footer span{color:var(--coral)}.footer .footer-divider{padding:0 8px;color:var(--muted)}.progress-track{height:10px;border-radius:99px;background:var(--bg);border:1px solid var(--line);overflow:hidden}.progress-fill{background:var(--green);height:100%;width:0;transition:width .2s}.schedule-list{padding:0;list-style:none;display:grid;gap:10px;margin:20px 0}.schedule-item{border:1.5px solid var(--line);border-radius:14px;display:flex;align-items:center;gap:10px;padding:10px 12px}.schedule-item.current{border:2px solid var(--green);background:var(--green-2)}.schedule-item.completed{opacity:.72}.schedule-emoji{font-size:1.9rem}.schedule-step{flex:1;min-width:0}.schedule-step strong{display:block;overflow-wrap:anywhere;font-size:.86rem}.schedule-step small{display:block;color:var(--muted);font-size:.7rem}.completed .schedule-step strong{text-decoration:line-through}.schedule-check{width:38px;height:38px;flex-shrink:0;border-radius:12px;border:1.5px solid var(--green);background:var(--paper);font-weight:700}.schedule-item.completed .schedule-check{background:var(--green);color:#fff}.schedule-controls{display:flex;gap:4px}.schedule-controls button{width:32px;height:35px;min-height:35px;font-weight:700}.add-form{display:flex;align-items:end;gap:9px;margin:18px 0}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field>span,.inline-field label{font-size:.73rem;font-weight:700;color:var(--muted)}.field input,.field select,.inline-field select,textarea{min-height:47px;border:1.5px solid var(--line);background:var(--paper);border-radius:11px;padding:10px 12px;width:100%;color:var(--text)}.field.grow{flex:1}.field:not(.grow) select{min-width:77px}.add-btn{white-space:nowrap}.empty-state{padding:20px;background:var(--bg);border-radius:12px;text-align:center}.speech-display{background:var(--green-2);border:1px solid var(--line);padding:23px;border-radius:16px;margin-bottom:20px}.speech-label{font-size:.65rem;font-weight:700;letter-spacing:.15em;color:var(--green-deep)}#spoken-text{font-family:Georgia,serif;font-size:clamp(1.7rem,3vw,2.25rem);min-height:75px;font-weight:700;overflow-wrap:anywhere;padding:8px 0}.speech-actions{display:flex;gap:8px;flex-wrap:wrap}.speech-display .quiet{min-height:18px}.pill-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:15px}.category-btn{padding:8px 13px;border-radius:99px;font-size:.74rem;font-weight:700;min-height:36px}.category-btn[aria-pressed=true]{background:var(--green-2);color:var(--green-deep);border-color:var(--green)}.phrase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.phrase-item{position:relative;min-width:0}.phrase-btn{width:100%;padding:15px 12px;min-height:80px;font-weight:700;text-align:center;font-size:.85rem;overflow-wrap:anywhere}.remove-phrase{position:absolute;right:3px;top:3px;width:28px;height:28px;border:0;border-radius:50%;background:var(--bg);font-size:.85rem;cursor:pointer}.calm-panel{text-align:center;background:var(--bg);border-radius:17px;padding:33px 16px}.breathing-orb{margin:5px auto 35px;width:170px;height:170px;border-radius:50%;display:grid;place-items:center;color:var(--green-deep);font-size:5rem;background:radial-gradient(circle at 34% 30%,#e8f3e5,#a6cabc);box-shadow:0 0 0 19px rgba(146,195,175,.11),0 0 0 35px rgba(146,195,175,.08);transform:scale(.9)}.breathing-orb.active{animation:gentle-breathe 10s ease-in-out infinite}.breathing-orb span{opacity:.8}@keyframes gentle-breathe{0%,100%{transform:scale(.88)}40%{transform:scale(1.08)}}.calm-panel h3{font-size:1.5rem}.calm-panel p{max-width:430px;margin:8px auto 18px}.timer-number{text-align:center;font-family:Georgia,serif;font-size:4.5rem;font-variant-numeric:tabular-nums;line-height:1.3;margin:9px}.inline-field{justify-content:center;display:flex;align-items:center;gap:12px}.inline-field select{width:auto}.grounding-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.grounding-grid>div{border:1px solid var(--line);border-radius:13px;padding:18px;background:var(--bg)}.grounding-grid span{font-size:1.75rem;display:block}.grounding-grid strong{font-size:.82rem}.grounding-grid p{font-size:.76rem;color:var(--muted);margin:2px 0}.form-grid,.setting-row{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:17px}.form-grid .full{grid-column:1/-1}.result-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.result-heading h3{margin:0 0 12px}#plan-output{width:100%;font-size:.82rem;line-height:1.5;resize:vertical;min-height:360px}.toggle{display:flex;align-items:center;gap:10px;font-size:.8rem;font-weight:700}.toggle input{width:21px;height:21px;accent-color:var(--green)}.file-label{display:inline-flex;align-items:center;justify-content:center;cursor:pointer}.visually-hidden,.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.file-label:focus-within{outline:3px solid var(--coral)}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);z-index:20;padding:12px 22px;background:var(--green-deep);color:var(--paper);border-radius:12px;box-shadow:0 10px 35px #0002;font-size:.84rem;font-weight:700;max-width:calc(100vw - 30px)}
+@media(max-width:1200px){.content-layout{grid-template-columns:minmax(0,1fr) 230px}.side-card{padding:20px}.sidebar{width:220px}}@media(max-width:1020px){.content-layout{grid-template-columns:1fr}.support-column{display:grid;grid-template-columns:1fr 1fr;gap:15px}.support-column .side-card{margin:0}.sidebar{width:198px;padding:22px 11px}.brand small{font-size:.62rem}}@media(max-width:760px){.app-shell{display:block}.sidebar{height:auto;position:sticky;z-index:10;width:100%;top:0;padding:10px 12px;background:var(--side);box-shadow:0 2px 10px #0001}.brand{display:none}.nav-heading,.sidebar-spacer,.sidebar-footer .privacy-note{display:none}.nav-list{grid-template-columns:repeat(5,minmax(0,1fr));gap:2px}.nav-btn{display:flex;flex-direction:column;gap:0;min-height:58px;padding:7px 2px;text-align:center;font-size:.6rem;line-height:1.25;white-space:nowrap;border-radius:10px}.nav-icon{font-size:1.2rem}.sidebar-footer{position:absolute;top:10px;right:3px;border:0;padding:0}.sidebar-footer .nav-btn{width:35px;font-size:0;min-height:52px}.sidebar-footer .nav-icon{font-size:1.3rem}.nav-list{padding-right:36px}.topbar{height:43px;padding:0 18px;border:0}.topbar .eyebrow,.small-round{display:none}.date-label{font-size:.72rem}main{padding:15px 12px}.hero{min-height:205px;padding:28px 22px;margin-bottom:14px}.hero h1{font-size:2.32rem;max-width:430px}.hero-kicker{font-size:.56rem}.hero-illustration{position:absolute;right:-80px;opacity:.45;width:160px;height:190px}.content-layout{gap:5px}.card{padding:19px;border-radius:16px;margin-bottom:13px}.support-column{grid-template-columns:1fr}.support-column .tips{display:none}.side-card{min-height:auto}.encouragement{display:none}.mood-grid{grid-template-columns:repeat(5,1fr)}.mood-btn{font-size:.62rem}.mood-btn .emoji{font-size:1.7rem}.schedule-controls{flex-direction:column}.schedule-controls button{height:31px;min-height:31px}.form-grid,.setting-row{grid-template-columns:1fr}.add-form{flex-wrap:wrap}.add-btn{flex:1}.phrase-grid{grid-template-columns:repeat(2,1fr)}.footer{padding:15px 0 30px}}
+@media(max-width:410px){.hero h1{font-size:2rem}.answer-grid{grid-template-columns:1fr}.answer-btn{padding:10px}.emotion-face{font-size:5rem}.mood-grid{grid-template-columns:repeat(3,1fr)}.schedule-emoji{font-size:1.45rem}.card-head{flex-wrap:wrap}.grounding-grid{grid-template-columns:1fr}.topbar-right{gap:3px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{.sidebar,.topbar,.hero,.support-column,.footer,.actions-row,.card-head,#plan-form{display:none!important}body,.workspace,.card{background:#fff!important;color:#000!important;box-shadow:none;border:0}main{padding:0}.page:not(#page-plan){display:none!important}#page-plan,#plan-result{display:block!important}#plan-output{border:0;min-height:0;width:100%;height:80vh;white-space:pre-wrap}}
+.print-plan{display:none}@media print{#plan-output{display:none!important}.print-plan{display:block!important;white-space:pre-wrap;word-break:break-word;font:12pt/1.5 Arial,sans-serif;color:#000}}
+
+</style>
+  <title>Steady • A little support goes a long way</title>
+
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="App navigation">
+      <a href="#feelings" class="brand" id="brand-link" aria-label="Steady home">
+        <span class="brand-mark" aria-hidden="true">✳</span>
+        <span><strong>steady<span class="brand-dot">.</span></strong><small>Your space to feel okay.</small></span>
+      </a>
+      <p class="nav-heading">YOUR TOOLKIT</p>
+      <nav class="nav-list" aria-label="Main tools">
+        <button class="nav-btn selected" data-page="feelings" aria-current="page"><span class="nav-icon">☀</span><span>Feelings</span></button>
+        <button class="nav-btn" data-page="day"><span class="nav-icon">▦</span><span>My day</span></button>
+        <button class="nav-btn" data-page="talk"><span class="nav-icon">☏</span><span>Talk board</span></button>
+        <button class="nav-btn" data-page="calm"><span class="nav-icon">◌</span><span>Calm space</span></button>
+        <button class="nav-btn" data-page="plan"><span class="nav-icon">✎</span><span>Lesson planner</span></button>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-footer">
+        <button class="nav-btn" data-page="settings"><span class="nav-icon">⚙</span><span>Settings & privacy</span></button>
+        <div class="privacy-note"><span aria-hidden="true">✦</span> Your words and routines stay on this device.</div>
+      </div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar">
+        <div class="topbar-left"><span class="eyebrow">YOUR GENTLE SPACE</span><span id="date-display" class="date-label"></span></div>
+        <div class="topbar-right"><span class="offline-chip" id="connection-status"><span class="status-dot"></span>Ready offline</span><button class="small-round" id="header-settings" aria-label="Open settings">⚙</button></div>
+      </header>
+      <main id="main" tabindex="-1">
+        <div class="hero">
+          <div><span class="hero-kicker">A LITTLE SUPPORT, RIGHT WHEN YOU NEED IT</span><h1 id="page-title">Every feeling belongs here.</h1><p id="page-subtitle">Take your time. There’s no rush, no pressure, and no wrong way to begin.</p></div>
+          <div class="hero-illustration" aria-hidden="true"><div class="illustration-sun">✳</div><div class="illustration-hill"></div><span class="illustration-heart">♥</span></div>
+        </div>
+        <div class="content-layout">
+          <div class="primary-column">
+            <section class="page" id="page-feelings" aria-labelledby="feelings-heading">
+              <div class="card main-card">
+                <div class="card-head"><div><span class="eyebrow accent">EXPLORE & LEARN</span><h2 id="feelings-heading">Match the feeling</h2><p>Look at the face and choose the feeling that fits. It's okay to try again.</p></div><span class="mini-tag" id="game-score">0 kind tries</span></div>
+                <div class="emotion-scene"><div class="emotion-face" id="emotion-face" role="img" aria-label="A face showing a feeling">😊</div><p class="emotion-prompt">What might this person be feeling?</p></div>
+                <div class="answer-grid" id="emotion-choices" aria-label="Emotion choices"></div>
+                <div class="feedback" id="emotion-feedback" role="status" aria-live="polite"></div>
+                <div class="actions-row"><button class="btn btn-outline" id="emotion-skip">Try another face <span aria-hidden="true">→</span></button><button class="btn btn-primary" id="emotion-next" hidden>Next feeling <span aria-hidden="true">→</span></button></div>
+              </div>
+              <div class="card checkin-card"><div class="card-head"><div><span class="eyebrow accent">JUST FOR YOU</span><h2>How are you feeling?</h2><p>Pick a feeling. You don't have to explain it.</p></div></div><div class="mood-grid" id="mood-choices"></div><div id="mood-response" class="support-message" role="status" aria-live="polite" hidden></div><small class="quiet">Your check-in is not saved.</small></div>
+            </section>
+            <section class="page" id="page-day" aria-labelledby="day-heading" hidden>
+              <div class="card main-card"><div class="card-head"><div><span class="eyebrow accent">ONE THING AT A TIME</span><h2 id="day-heading">My visual schedule</h2><p>A predictable day, in little steps. Mark tasks done or move them around.</p></div><span class="mini-tag" id="day-progress">0 of 0 done</span></div><div class="progress-track" aria-hidden="true"><div id="day-progress-bar" class="progress-fill"></div></div><ol class="schedule-list" id="schedule-list"></ol><div id="schedule-empty" class="empty-state" hidden>No steps yet. Add your first one below.</div><form class="add-form" id="schedule-form"><label class="field"><span>Picture</span><select id="schedule-emoji" aria-label="Picture for the new activity"><option>🏫</option><option>📖</option><option>🍎</option><option>🎨</option><option>🧩</option><option>🚻</option><option>🌳</option><option>🎵</option><option>🛌</option><option>🚌</option><option>🧼</option><option>⚽</option><option>💧</option></select></label><label class="field grow"><span>New activity</span><input id="schedule-text" maxlength="70" placeholder="e.g. Quiet reading" required></label><button class="btn btn-primary add-btn" type="submit">+ Add step</button></form><div class="actions-row"><button class="btn btn-outline" id="day-restart">Start day over</button><button class="btn btn-text" id="day-defaults">Restore sample day</button></div></div>
+            </section>
+            <section class="page" id="page-talk" aria-labelledby="talk-heading" hidden>
+              <div class="card main-card"><div class="card-head"><div><span class="eyebrow accent">YOUR VOICE MATTERS</span><h2 id="talk-heading">Talk board</h2><p>Tap something you'd like to say. You can also make your own message.</p></div></div><div class="speech-display"><span class="speech-label">MY MESSAGE</span><div id="spoken-text" aria-live="polite">Choose a phrase below.</div><div class="speech-actions"><button class="btn btn-primary" id="speak-again">▶ Speak</button><button class="btn btn-outline" id="speech-stop">■ Stop</button><button class="btn btn-text" id="speech-clear">Clear</button></div><div id="speech-status" class="quiet" role="status"></div></div><div class="pill-row" id="phrase-categories" aria-label="Phrase categories"></div><div id="phrase-grid" class="phrase-grid"></div><form class="add-form" id="phrase-form"><label class="field grow"><span>Add a phrase of your own</span><input id="phrase-text" maxlength="120" placeholder="e.g. I would like to try again" required></label><button class="btn btn-primary add-btn" type="submit">+ Add</button></form><small class="quiet">You can remove your custom phrases. Spoken audio depends on your device and browser.</small></div>
+            </section>
+            <section class="page" id="page-calm" aria-labelledby="calm-heading" hidden>
+              <div class="card main-card"><div class="card-head"><div><span class="eyebrow accent">TAKE A MOMENT</span><h2 id="calm-heading">Your calm space</h2><p>There is no one right way to rest. Choose what feels comfortable.</p></div></div><div class="calm-panel"><div class="breathing-orb" id="breathing-orb" aria-hidden="true"><span>✦</span></div><h3 id="breathing-instruction">A gentle pause</h3><p id="breathing-description" class="quiet">If you like, follow the circle as it slowly grows and shrinks. Breathing exercises are always optional.</p><button class="btn btn-primary" id="breathe-toggle">Start gentle breathing</button></div></div><div class="card"><div class="card-head"><div><span class="eyebrow accent">A QUIET BREAK</span><h2>Take your time</h2><p>A silent countdown if a little structure helps.</p></div></div><div class="timer-number" id="timer-display" role="timer" aria-live="off">03:00</div><div class="field inline-field"><label for="timer-length">Break length</label><select id="timer-length"><option value="1">1 minute</option><option value="3" selected>3 minutes</option><option value="5">5 minutes</option><option value="10">10 minutes</option></select></div><div class="actions-row"><button class="btn btn-primary" id="timer-toggle">Start break</button><button class="btn btn-outline" id="timer-reset">Reset</button></div><div id="timer-status" class="quiet" role="status"></div></div><div class="card"><div class="card-head"><div><span class="eyebrow accent">GROUND IN THE MOMENT</span><h2>Notice what’s around you</h2><p>Try any one of these, or skip them.</p></div></div><div class="grounding-grid"><div><span>👀</span><strong>See</strong><p>Something with a color you like</p></div><div><span>👂</span><strong>Hear</strong><p>A sound nearby or a moment of quiet</p></div><div><span>🖐</span><strong>Feel</strong><p>Your feet on the floor or a soft texture</p></div><div><span>💭</span><strong>Choose</strong><p>Something that feels safe or comforting</p></div></div></div>
+            </section>
+            <section class="page" id="page-plan" aria-labelledby="plan-heading" hidden>
+              <div class="card main-card"><div class="card-head"><div><span class="eyebrow accent">PLAN WITH CONFIDENCE</span><h2 id="plan-heading">Lesson planner</h2><p>Make a flexible, predictable lesson plan. Edit every word to fit your learners.</p></div></div><form id="plan-form"><div class="form-grid"><label class="field full"><span>What are we learning?</span><input id="plan-topic" maxlength="100" placeholder="e.g. Taking turns, fractions, the water cycle" required></label><label class="field"><span>Learner age group</span><select id="plan-age"><option value="5 to 8">5 to 8 years</option><option value="9 to 12">9 to 12 years</option><option value="13 to 17">13 to 17 years</option><option value="Adult">Adults</option></select></label><label class="field"><span>Session length</span><select id="plan-minutes"><option value="30">30 minutes</option><option value="45" selected>45 minutes</option><option value="60">60 minutes</option><option value="90">90 minutes</option></select></label></div><button class="btn btn-primary" type="submit">✦ Create lesson plan</button></form><div id="plan-result" hidden><hr><div class="result-heading"><h3>Your editable plan</h3><span class="mini-tag" id="plan-total"></span></div><label class="sr-only" for="plan-output">Editable lesson plan</label><textarea id="plan-output" rows="19" spellcheck="true"></textarea><div class="actions-row"><button class="btn btn-primary" id="plan-copy">Copy plan</button><button class="btn btn-outline" id="plan-download">Download .txt</button><button class="btn btn-outline" id="plan-print">Print</button></div><p class="quiet">Plans are starting points, not individualized professional assessments.</p></div></div>
+            </section>
+            <section class="page" id="page-settings" aria-labelledby="settings-heading" hidden>
+              <div class="card main-card"><div class="card-head"><div><span class="eyebrow accent">MAKE IT YOURS</span><h2 id="settings-heading">Settings & privacy</h2><p>Steady works without an account, ads, or analytics.</p></div></div><div class="setting-row"><label class="field"><span>Appearance</span><select id="setting-theme"><option value="system">Match device</option><option value="light">Light</option><option value="dark">Dark</option></select></label><label class="field"><span>Text size</span><select id="setting-size"><option value="normal">Normal</option><option value="large">Large</option><option value="largest">Extra large</option></select></label></div><div class="setting-row"><label class="toggle"><input type="checkbox" id="setting-contrast"><span>Higher contrast borders</span></label><label class="toggle"><input type="checkbox" id="setting-motion"><span>Reduce animations</span></label></div><div class="setting-row"><label class="field"><span>Speaking speed</span><select id="setting-rate"><option value="0.7">Slow</option><option value="0.9">Gentle</option><option value="1">Normal</option><option value="1.15">A little faster</option></select></label><label class="field"><span>Voice (if available)</span><select id="setting-voice"><option value="">Device default</option></select></label></div><hr><h3>Data on this device</h3><p class="quiet">Schedules, your phrases, and settings are saved locally in this browser. They do not sync between devices. On a shared device, other people using the same browser profile may see them.</p><div class="actions-row"><button class="btn btn-outline" id="data-export">Download my backup</button><label class="btn btn-outline file-label">Import a backup <input type="file" id="data-import" accept="application/json,.json" class="visually-hidden"></label><button class="btn btn-danger" id="data-clear">Erase saved data</button></div><div id="data-status" role="status" class="quiet"></div><hr><h3>About Steady</h3><p class="quiet">A welcoming toolkit designed to support different ways of communicating, learning and resting. Made with care for Domonique. This is not an emergency service, a diagnosis tool, or a replacement for qualified educational, communication, or healthcare support.</p><p class="quiet">Steady version 2.0 • Free and open to use • No account required</p></div>
+            </section>
+          </div>
+          <aside class="support-column" aria-label="Helpful encouragement"><div class="side-card encouragement"><div class="side-illustration" aria-hidden="true">✿</div><span class="eyebrow">A GENTLE REMINDER</span><h3>You’re doing enough.</h3><p>Small steps count. Every way of learning and communicating deserves respect.</p><div class="decorative-lines" aria-hidden="true">﹏﹏﹏</div></div><div class="side-card tips"><span class="eyebrow">BUILT AROUND YOU</span><div class="tip-line"><span class="tip-icon">♡</span><div><strong>No pressure</strong><p>No timers in feelings practice, no harsh feedback.</p></div></div><div class="tip-line"><span class="tip-icon">◉</span><div><strong>Accessible by design</strong><p>Large buttons, clear text, keyboard navigation.</p></div></div><div class="tip-line"><span class="tip-icon">⌂</span><div><strong>Private by default</strong><p>Everything works locally, even offline after installation.</p></div></div></div></aside>
+        </div>
+        <footer class="footer">Made with care for Domonique <span aria-hidden="true">♥</span> <span class="footer-divider">·</span> Everyone deserves to feel heard.</footer>
+      </main>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<script>
+/* Steady 2.0 — local-first, dependency-free learning support toolkit. */
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const STORE = 'steady.v2';
+  const DEFAULT_DAY = [
+    { emoji: '🚌', text: 'Arrive', done: false },
+    { emoji: '📖', text: 'Reading', done: false },
+    { emoji: '🍎', text: 'Snack', done: false },
+    { emoji: '🧩', text: 'Group activity', done: false },
+    { emoji: '🌳', text: 'Outside time', done: false }
+  ];
+  const OLD_PHRASES = ['I need a break','Yes','No','Help please','I am done','More please','Too loud','Water please','Bathroom','Wait please','I feel good','I do not understand'];
+  const BASE_PHRASES = {
+    Needs: ['I need help', 'I need a break', 'Water please', 'Bathroom please', 'I feel sick', 'Too loud', 'Please stop', 'I need space', 'I need help now'],
+    Feelings: ['I feel happy', 'I feel sad', 'I am worried', 'I am frustrated', 'I am tired', 'I feel excited', 'I feel overwhelmed', 'I feel safe', 'I do not feel okay'],
+    Learning: ['Please say it again', 'I need more time', 'I have a question', 'Please show me', 'I do not understand', 'I am ready', 'I am done', 'Can we try together?', 'I want to try again'],
+    Social: ['Hello!', 'Thank you', 'Yes', 'No', 'Please', 'Wait please', 'I would like to join', 'I prefer to watch', 'Goodbye']
+  };
+  const EMOTIONS = [
+    { emoji: '😊', label: 'Happy', cue: 'A face with raised cheeks and a big smile.', note: 'Happiness can feel warm and bright.' },
+    { emoji: '😢', label: 'Sad', cue: 'A face with a downward mouth and a tear.', note: 'Sad feelings deserve care, too.' },
+    { emoji: '😠', label: 'Angry', cue: 'A red face with lowered eyebrows and a frown.', note: 'Feeling angry is okay. We can choose what to do next.' },
+    { emoji: '😨', label: 'Scared', cue: 'A face with wide eyes and an open mouth.', note: 'It can help to find a trusted person when we feel scared.' },
+    { emoji: '😴', label: 'Tired', cue: 'A face with eyes closed and a sleeping symbol.', note: 'Rest is a good thing to ask for.' },
+    { emoji: '😮', label: 'Surprised', cue: 'A face with raised eyebrows and a rounded open mouth.', note: 'Surprises can feel exciting or uncomfortable.' },
+    { emoji: '😖', label: 'Upset', cue: 'A face with scrunched eyes and a tense mouth.', note: 'Big feelings can get smaller with time and support.' },
+    { emoji: '🤒', label: 'Sick', cue: 'A face with a thermometer in its mouth.', note: 'When we feel sick, we can tell someone who can help.' },
+    { emoji: '😌', label: 'Calm', cue: 'A face with closed eyes and a small restful smile.', note: 'A quiet, settled feeling.' },
+    { emoji: '😕', label: 'Confused', cue: 'A face with an uneven, uncertain mouth.', note: 'It is always okay to ask another question.' }
+  ];
+  const MOODS = [
+    { emoji: '😊', label: 'Happy', message: 'It is lovely to notice a good feeling. You can enjoy this moment.' },
+    { emoji: '😢', label: 'Sad', message: 'Sadness is welcome here. You could take a quiet moment or tell someone you trust.' },
+    { emoji: '😟', label: 'Worried', message: 'Worries can feel big. You might like to ask for reassurance or try a quiet break.' },
+    { emoji: '😠', label: 'Angry', message: 'Anger is a feeling, not a mistake. You can ask for space before deciding what to do.' },
+    { emoji: '😴', label: 'Tired', message: 'You deserve rest. It is okay to ask for a pause.' }
+  ];
+  const TIPS = {
+    '5 to 8': 'Use pictures and short, literal instructions. Model each activity first. Offer sensory-friendly options without requiring participation.',
+    '9 to 12': 'Show a visible agenda and a worked example. Offer choices between two ways to respond. Give a gentle warning before transitions.',
+    '13 to 17': 'Explain why the activity matters. Offer speaking, typing, drawing or doing as equally valid responses. Make breaks available without questions.',
+    'Adult': 'Share the agenda in advance. Use plain language, adult-respectful examples and flexible response formats. Provide breaks without asking anyone to justify them.'
+  };
+  const DURATIONS = {
+    30: [4,5,9,4,5,3],
+    45: [5,7,14,5,10,4],
+    60: [6,10,18,6,14,6],
+    90: [8,15,30,8,20,9]
+  };
+  const SETTINGS = { theme: 'system', size: 'normal', contrast: false, motion: false, rate: '0.9', voice: '' };
+  const clone = value => JSON.parse(JSON.stringify(value));
+  const trimText = (value, max) => typeof value === 'string' ? value.trim().slice(0, max) : '';
+  const choice = (value, options, fallback) => options.includes(value) ? value : fallback;
+  function validate(raw) {
+    const s = raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
+    const sourceSchedule = Array.isArray(s.schedule) ? s.schedule : clone(DEFAULT_DAY);
+    const schedule = sourceSchedule.slice(0, 60).map(item => ({
+      emoji: trimText(item && (item.emoji || item.e), 8) || '⭐',
+      text: trimText(item && (item.text || item.t), 70),
+      done: !!(item && (item.done || item.d))
+    })).filter(item => item.text);
+    const custom = Array.isArray(s.custom) ? s.custom.map(v => trimText(v,120)).filter(Boolean).slice(0,60) : [];
+    const old = s.settings && typeof s.settings === 'object' ? s.settings : {};
+    const settings = {
+      theme: choice(old.theme, ['system','light','dark'], SETTINGS.theme),
+      size: choice(old.size, ['normal','large','largest'], SETTINGS.size),
+      contrast: old.contrast === true,
+      motion: old.motion === true,
+      rate: choice(String(old.rate ?? SETTINGS.rate), ['0.7','0.9','1','1.15'], SETTINGS.rate),
+      voice: trimText(old.voice, 200)
+    };
+    return { version: 2, schedule, custom: [...new Set(custom)], settings };
+  }
+  function readOld(key, fallback) {try {let s=localStorage.getItem(key);return s ? JSON.parse(s) : fallback;} catch {return fallback;}}
+  function initialState() {
+    try {const modern=localStorage.getItem(STORE);if(modern)return validate(JSON.parse(modern));} catch {}
+    const oldSchedule = readOld('sched', null);
+    const oldPhrases = readOld('phrases', null);
+    const oldSize = readOld('size', null);
+    const legacy = {
+      schedule: Array.isArray(oldSchedule) ? oldSchedule : clone(DEFAULT_DAY),
+      custom: Array.isArray(oldPhrases) ? oldPhrases.filter(item => typeof item === 'string' && !OLD_PHRASES.includes(item)) : [],
+      settings: { size: oldSize === 1 ? 'large' : oldSize === 2 ? 'normal' : 'normal' }
+    };
+    return validate(legacy);
+  }
+  let state = initialState();
+  const persist = () => {try {localStorage.setItem(STORE, JSON.stringify(state));return true;} catch {return false;}};
+  let toastTimeout;
+  function toast(message) {const node=$('toast');node.textContent=message;node.hidden=false;clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>node.hidden=true,3100);}
+  const safeText = (text) => document.createTextNode(text);
+  function el(tag, className, text) {const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;}
+  function saveChanges() {if(!persist())toast('Saved for this visit only. Browser storage may be disabled.');}
+  const PAGE_INFO = {
+    feelings: ['Every feeling belongs here.', 'Take your time. There’s no rush, no pressure, and no wrong way to begin.'],
+    day: ['One step at a time.', 'A little structure can make the day feel more manageable.'],
+    talk: ['Your voice matters.', 'Say what you need, in your own way and in your own time.'],
+    calm: ['You can take a moment.', 'There is room to pause, feel, and begin again.'],
+    plan: ['Plan with a little more ease.', 'Make space for every learner to participate their way.'],
+    settings: ['Make this space yours.', 'Change what helps, and keep control of your information.']
+  };
+  function navigate(page, setHash=true) {
+    if(!PAGE_INFO[page])page='feelings';
+    document.querySelectorAll('.page').forEach(node=>node.hidden=node.id!==`page-${page}`);
+    document.querySelectorAll('[data-page]').forEach(node=>{
+      const active=node.dataset.page===page;
+      node.classList.toggle('selected',active);
+      if(active)node.setAttribute('aria-current','page');else node.removeAttribute('aria-current');
+    });
+    $('page-title').textContent=PAGE_INFO[page][0];
+    $('page-subtitle').textContent=PAGE_INFO[page][1];
+    document.title=`${page==='day'?'My day':page[0].toUpperCase()+page.slice(1)} • Steady`;
+    if(setHash) { if(location.hash.slice(1)!==page)location.hash=page; window.scrollTo(0,0); $('main').focus({preventScroll:true}); }
+  }
+  document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>navigate(btn.dataset.page)));
+  $('header-settings').addEventListener('click',()=>navigate('settings'));
+  $('brand-link').addEventListener('click',event=>{event.preventDefault();navigate('feelings');});
+  window.addEventListener('hashchange',()=>navigate(location.hash.slice(1),false));
+  navigate(location.hash.slice(1),false);
+  $('date-display').textContent=new Intl.DateTimeFormat(undefined,{weekday:'long',month:'short',day:'numeric'}).format(new Date());
+  function updateConnection() {$('connection-status').innerHTML='';const dot=el('span','status-dot');$('connection-status').append(dot,safeText(navigator.onLine?'Ready offline':'Offline & ready'));}
+  window.addEventListener('online',updateConnection);window.addEventListener('offline',updateConnection);updateConnection();
+
+  /* Emotion practice: no timed transitions, no negative sounds, and no tracking. */
+  let currentEmotion=null;
+  let gameTries=0;
+  let usedEmotions=[];
+  const shuffled = list => {const a=[...list];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+  function nextEmotion() {
+    if(usedEmotions.length===EMOTIONS.length)usedEmotions=[];
+    const options=EMOTIONS.filter(e=>!usedEmotions.includes(e.label));
+    currentEmotion=options[Math.floor(Math.random()*options.length)];
+    usedEmotions.push(currentEmotion.label);
+    $('emotion-face').textContent=currentEmotion.emoji;
+    $('emotion-face').setAttribute('aria-label',currentEmotion.cue);
+    $('emotion-feedback').textContent='';
+    $('emotion-next').hidden=true;
+    $('emotion-skip').hidden=false;
+    const wrong=shuffled(EMOTIONS.filter(e=>e!==currentEmotion)).slice(0,2);
+    const labels=shuffled([...wrong,currentEmotion]);
+    const target=$('emotion-choices');target.replaceChildren();
+    labels.forEach(item=>{
+      const b=el('button','answer-btn',item.label);b.type='button';
+      b.addEventListener('click',()=>{
+        gameTries++;$('game-score').textContent=`${gameTries} kind ${gameTries===1?'try':'tries'}`;
+        if(item===currentEmotion){b.classList.add('correct');$('emotion-feedback').textContent=`Yes, ${item.label.toLowerCase()}! ${item.note}`;target.querySelectorAll('button').forEach(x=>x.disabled=true);$('emotion-next').hidden=false;$('emotion-skip').hidden=true;}
+        else{b.classList.add('incorrect');b.disabled=true;$('emotion-feedback').textContent='That’s a different feeling. You can try another answer or choose a new face.';}
+      });target.appendChild(b);
+    });
+  }
+  $('emotion-next').addEventListener('click',nextEmotion);
+  $('emotion-skip').addEventListener('click',nextEmotion);
+  nextEmotion();
+  MOODS.forEach(m=>{
+    const b=el('button','mood-btn');b.type='button';b.setAttribute('aria-pressed','false');
+    b.append(el('span','emoji',m.emoji),el('span','',m.label));
+    b.addEventListener('click',()=>{
+      $('mood-choices').querySelectorAll('button').forEach(other=>other.setAttribute('aria-pressed',String(other===b)));
+      $('mood-response').hidden=false;$('mood-response').textContent=m.message;
+    });$('mood-choices').appendChild(b);
+  });
+
+  /* Visual schedule: editable, reorderable, stored only in the local browser. */
+  function drawSchedule() {
+    const list=$('schedule-list');list.replaceChildren();
+    const done=state.schedule.filter(item=>item.done).length;
+    $('day-progress').textContent=`${done} of ${state.schedule.length} done`;
+    $('day-progress-bar').style.width=state.schedule.length?`${(done/state.schedule.length)*100}%`:'0%';
+    $('schedule-empty').hidden=state.schedule.length!==0;
+    const current=state.schedule.findIndex(item=>!item.done);
+    state.schedule.forEach((item,index)=>{
+      const li=el('li',`schedule-item${item.done?' completed':''}${index===current?' current':''}`);
+      const check=el('button','schedule-check',item.done?'✓':'○');check.type='button';check.setAttribute('aria-label',`${item.done?'Mark not done':'Mark done'}: ${item.text}`);
+      check.addEventListener('click',()=>{state.schedule[index].done=!item.done;saveChanges();drawSchedule();});
+      const ico=el('span','schedule-emoji',item.emoji);ico.setAttribute('aria-hidden','true');
+      const detail=el('div','schedule-step');detail.append(el('strong','',item.text),el('small','',item.done?'Finished':index===current?'Up next / now':'Coming up'));
+      const controls=el('div','schedule-controls');
+      [['↑','Move up',-1],['↓','Move down',1]].forEach(([symbol,name,offset])=>{
+        const btn=el('button','',symbol);btn.type='button';btn.disabled=index+offset<0||index+offset>=state.schedule.length;btn.setAttribute('aria-label',`${name}: ${item.text}`);
+        btn.addEventListener('click',()=>{[state.schedule[index],state.schedule[index+offset]]=[state.schedule[index+offset],state.schedule[index]];saveChanges();drawSchedule();});controls.appendChild(btn);
+      });
+      const remove=el('button','','×');remove.type='button';remove.setAttribute('aria-label',`Remove: ${item.text}`);remove.addEventListener('click',()=>{state.schedule.splice(index,1);saveChanges();drawSchedule();toast('Step removed.');});controls.appendChild(remove);
+      li.append(check,ico,detail,controls);list.appendChild(li);
+    });
+  }
+  $('schedule-form').addEventListener('submit',event=>{
+    event.preventDefault();const value=trimText($('schedule-text').value,70);if(!value)return;
+    if(state.schedule.length>=60){toast('A schedule can hold up to 60 steps.');return;}
+    state.schedule.push({emoji:$('schedule-emoji').value,text:value,done:false});$('schedule-text').value='';saveChanges();drawSchedule();$('schedule-text').focus();
+  });
+  $('day-restart').addEventListener('click',()=>{if(!state.schedule.length)return;state.schedule.forEach(item=>item.done=false);saveChanges();drawSchedule();toast('A fresh start for your day.');});
+  $('day-defaults').addEventListener('click',()=>{if(!confirm('Replace your current schedule with the original sample day?'))return;state.schedule=clone(DEFAULT_DAY);saveChanges();drawSchedule();});
+  drawSchedule();
+
+  /* A voice board designed to keep text useful even when TTS is unavailable. */
+  let category='Needs';
+  let spokenMessage='';
+  const voiceSupported='speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+  function say(text){
+    spokenMessage=text;$('spoken-text').textContent=text;
+    if(!voiceSupported){$('speech-status').textContent='Text is ready to show. This browser does not support speaking aloud.';return;}
+    try {
+      speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);
+      utterance.rate=Number(state.settings.rate);
+      const voice=(speechSynthesis.getVoices()||[]).find(v=>v.voiceURI===state.settings.voice);
+      if(voice)utterance.voice=voice;
+      utterance.onerror=()=>{$('speech-status').textContent='Could not play audio. The message is still visible.';};
+      speechSynthesis.speak(utterance);$('speech-status').textContent='Speaking if your device has a voice available.';
+    } catch {$('speech-status').textContent='Audio is unavailable. You can show the message as text.';}
+  }
+  function drawCategories(){const parent=$('phrase-categories');parent.replaceChildren();[...Object.keys(BASE_PHRASES),'My phrases'].forEach(label=>{
+    const b=el('button','category-btn',label);b.type='button';b.setAttribute('aria-pressed',String(category===label));
+    b.addEventListener('click',()=>{category=label;drawCategories();drawPhrases();});parent.appendChild(b);
+  });}
+  function drawPhrases(){const parent=$('phrase-grid');parent.replaceChildren();const phrases=category==='My phrases'?state.custom:BASE_PHRASES[category];
+    if(!phrases.length){parent.append(el('p','quiet','No custom phrases yet. Add one below.'));return;}
+    phrases.forEach((phrase,index)=>{
+      const wrapper=el('div','phrase-item');const b=el('button','phrase-btn',phrase);b.type='button';b.addEventListener('click',()=>say(phrase));wrapper.appendChild(b);
+      if(category==='My phrases'){
+        const remove=el('button','remove-phrase','×');remove.type='button';remove.setAttribute('aria-label',`Remove custom phrase: ${phrase}`);
+        remove.addEventListener('click',()=>{state.custom.splice(index,1);saveChanges();drawPhrases();toast('Phrase removed.');});wrapper.appendChild(remove);
+      }parent.appendChild(wrapper);
+    });
+  }
+  $('phrase-form').addEventListener('submit',event=>{
+    event.preventDefault();const phrase=trimText($('phrase-text').value,120);if(!phrase)return;
+    if(state.custom.length>=60){toast('You can save up to 60 custom phrases.');return;}
+    if(state.custom.some(x=>x.toLowerCase()===phrase.toLowerCase())){toast('That phrase is already on your board.');return;}
+    state.custom.push(phrase);$('phrase-text').value='';category='My phrases';saveChanges();drawCategories();drawPhrases();toast('Your phrase is ready.');
+  });
+  $('speak-again').addEventListener('click',()=>{if(spokenMessage)say(spokenMessage);else toast('Choose a phrase first.');});
+  $('speech-stop').addEventListener('click',()=>{if(voiceSupported)speechSynthesis.cancel();$('speech-status').textContent='Speech stopped.';});
+  $('speech-clear').addEventListener('click',()=>{if(voiceSupported)speechSynthesis.cancel();spokenMessage='';$('spoken-text').textContent='Choose a phrase below.';$('speech-status').textContent='';});
+  function voices(){const menu=$('setting-voice');const current=state.settings.voice;menu.replaceChildren(new Option('Device default',''));
+    if(!voiceSupported)return;
+    (speechSynthesis.getVoices()||[]).filter(v=>v.lang&&v.lang.startsWith('en')).forEach(v=>menu.add(new Option(`${v.name} (${v.lang})`,v.voiceURI)));
+    menu.value=Array.from(menu.options).some(o=>o.value===current)?current:'';
+  }
+  if(voiceSupported){speechSynthesis.addEventListener?.('voiceschanged',voices);}voices();drawCategories();drawPhrases();
+
+  /* Calm tools: opt-in animation and a silent pause timer. */
+  let breatheInterval=null;
+  function stopBreathing(){if(breatheInterval)clearInterval(breatheInterval);breatheInterval=null;$('breathing-orb').classList.remove('active');$('breathing-instruction').textContent='A gentle pause';$('breathing-description').textContent='If you like, follow the circle as it slowly grows and shrinks. Breathing exercises are always optional.';$('breathe-toggle').textContent='Start gentle breathing';}
+  $('breathe-toggle').addEventListener('click',()=>{
+    if(breatheInterval){stopBreathing();return;}
+    let elapsed=0;const tick=()=>{$('breathing-instruction').textContent=elapsed%10<4?'Breathe in, gently':'Breathe out, slowly';elapsed++;};
+    tick();breatheInterval=setInterval(tick,1000);$('breathing-orb').classList.add('active');$('breathe-toggle').textContent='Stop gentle breathing';$('breathing-description').textContent='You can stop any time. Never hold your breath or force the rhythm.';
+  });
+  let remainingSeconds=180,timerInterval=null,timerEnd=0;
+  function timerDraw(){const m=Math.floor(remainingSeconds/60);const s=remainingSeconds%60;$('timer-display').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;}
+  function timerStop(){if(timerInterval)clearInterval(timerInterval);timerInterval=null;$('timer-toggle').textContent='Start break';}
+  function timerTick(){remainingSeconds=Math.max(0,Math.ceil((timerEnd-Date.now())/1000));timerDraw();if(remainingSeconds===0){timerStop();$('timer-status').textContent='Your break is complete. You can take more time if you need it.';}}
+  $('timer-toggle').addEventListener('click',()=>{
+    if(timerInterval){timerTick();timerStop();$('timer-toggle').textContent='Continue break';$('timer-status').textContent='Break paused.';return;}
+    if(remainingSeconds===0)remainingSeconds=Number($('timer-length').value)*60;
+    timerEnd=Date.now()+remainingSeconds*1000;
+    timerInterval=setInterval(timerTick,250);$('timer-toggle').textContent='Pause break';$('timer-status').textContent='Quiet time is yours. There will be no alarm.';timerDraw();
+  });
+  $('timer-reset').addEventListener('click',()=>{timerStop();remainingSeconds=Number($('timer-length').value)*60;timerDraw();$('timer-status').textContent='';});
+  $('timer-length').addEventListener('change',()=>{timerStop();remainingSeconds=Number($('timer-length').value)*60;timerDraw();$('timer-status').textContent='';});
+  timerDraw();
+
+  /* Plans always total exactly the requested duration. */
+  let planFilename='steady-lesson-plan';
+  function buildPlan(topic,age,minutes) {
+    const durations=DURATIONS[minutes];
+    if(!durations)throw Error('Unsupported session length');
+    const phases=[
+      ['Welcome & visual agenda', 'Use a consistent greeting, show the schedule and explain how to ask for a break.'],
+      ['Preview & model', `Show a small, concrete example of ${topic}. Say what success might look like; model one step.`],
+      ['Guided practice', `Try ${topic} in small steps. Check understanding with questions, visuals or demonstrations; allow extra processing time.`],
+      ['Optional regulation break', 'Offer quiet space, water, movement or silence. Let learners opt out or extend a break if needed.'],
+      ['Choice-based activity', 'Invite learners to show understanding by drawing, speaking, typing, building or another suitable way.'],
+      ['Reflect & preview', 'Celebrate participation and specific effort. Ask for feedback and preview what comes next.']
+    ];
+    const blocks=phases.map(([title,detail],i)=>`${i+1}. ${title} — ${durations[i]} minutes\n   ${detail}`).join('\n\n');
+    return `STEADY • FLEXIBLE LESSON PLAN\nTopic: ${topic}\nLearner age group: ${age}\nTotal planned time: ${minutes} minutes\n\nLEARNING INTENTION\nLearners will have an accessible opportunity to explore or practise ${topic}.\nChoose your own specific success criteria before delivery.\n\nSESSION FLOW\n${blocks}\n\nACCESSIBILITY & PARTICIPATION\n• ${TIPS[age]}\n• Ask each learner what support they want; do not assume based on a label or diagnosis.\n• Allow additional time and flexible breaks; adjust the schedule with the learner's input.\n• Check that instructions and materials are accessible in the formats needed.\n\nAFTER THE SESSION\n• What did learners demonstrate?\n• What support or adjustment helped?\n• What should we revisit next time?\n\nThis is a flexible teaching aid. Review and adapt it to the individual context.`;
+  }
+  $('plan-form').addEventListener('submit',event=>{
+    event.preventDefault();const topic=trimText($('plan-topic').value,100);if(!topic)return;
+    const age=$('plan-age').value,mins=Number($('plan-minutes').value);
+    $('plan-output').value=buildPlan(topic,age,mins);$('plan-total').textContent=`${mins} minutes total`;
+    $('plan-result').hidden=false;
+    planFilename='steady-'+topic.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,35)||'steady-lesson-plan';
+    toast('Your plan is ready to edit.');
+  });
+  async function copyText(value) {
+    if(!value)return false;
+    try {if(navigator.clipboard && window.isSecureContext){await navigator.clipboard.writeText(value);return true;}}
+    catch {}
+    try {const temp=document.createElement('textarea');temp.value=value;temp.style.position='fixed';temp.style.opacity='0';document.body.appendChild(temp);temp.focus();temp.select();const copied=document.execCommand('copy');temp.remove();return copied;}catch{return false;}
+  }
+  $('plan-copy').addEventListener('click',async()=>toast(await copyText($('plan-output').value)?'Plan copied.':'Select the plan text and copy it manually.'));
+  function downloadText(filename, content, mime='text/plain;charset=utf-8'){
+    const url=URL.createObjectURL(new Blob([content],{type:mime}));const a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+  $('plan-download').addEventListener('click',()=>downloadText(planFilename+'.txt',$('plan-output').value));
+  $('plan-print').addEventListener('click',()=>{
+    let printable=$('print-plan');if(!printable){printable=el('pre','print-plan');printable.id='print-plan';$('plan-result').appendChild(printable);}
+    printable.textContent=$('plan-output').value;window.print();
+  });
+
+  /* Settings, conservative backup import and privacy. */
+  function applySettings() {
+    const s=state.settings;const root=document.documentElement;
+    if(s.theme==='system')root.removeAttribute('data-theme');else root.dataset.theme=s.theme;
+    root.dataset.size=s.size;root.dataset.contrast=String(s.contrast);
+    root.dataset.motion=String(s.motion || matchMedia('(prefers-reduced-motion: reduce)').matches?'reduce':'normal');
+    $('setting-theme').value=s.theme;$('setting-size').value=s.size;$('setting-contrast').checked=s.contrast;$('setting-motion').checked=s.motion;$('setting-rate').value=s.rate;voices();
+  }
+  const fieldSettings={ 'setting-theme':'theme','setting-size':'size','setting-rate':'rate','setting-voice':'voice' };
+  Object.entries(fieldSettings).forEach(([id,key])=>$(id).addEventListener('change',e=>{state.settings[key]=e.target.value;saveChanges();applySettings();}));
+  [['setting-contrast','contrast'],['setting-motion','motion']].forEach(([id,key])=>$(id).addEventListener('change',e=>{state.settings[key]=e.target.checked;saveChanges();applySettings();}));
+  $('data-export').addEventListener('click',()=>{downloadText('steady-backup.json',JSON.stringify({app:'Steady',exportedAt:new Date().toISOString(),...state},null,2),'application/json');$('data-status').textContent='Your backup was downloaded to this device.';});
+  $('data-import').addEventListener('change',async event=>{
+    const file=event.target.files && event.target.files[0];if(!file)return;
+    event.target.value='';
+    if(file.size>250000){$('data-status').textContent='File is too large. Choose a Steady backup smaller than 250 KB.';return;}
+    try {
+      const data=JSON.parse(await file.text());
+      if(data.app!=='Steady'||data.version!==2||!Array.isArray(data.schedule)||!Array.isArray(data.custom)||!data.settings)throw Error('Invalid backup structure');
+      if(!confirm('Import this backup? It will replace the schedule, custom phrases and settings currently saved on this device.'))return;
+      state=validate(data);saveChanges();drawSchedule();drawPhrases();applySettings();$('data-status').textContent='Backup restored on this device.';
+    } catch {$('data-status').textContent='That does not look like a compatible Steady v2 backup.';}
+  });
+  $('data-clear').addEventListener('click',()=>{
+    if(!confirm('Erase all saved Steady schedules, custom phrases and settings from this browser? This cannot be undone without a backup.'))return;
+    state=validate({schedule:clone(DEFAULT_DAY),custom:[],settings:clone(SETTINGS)});
+    try{localStorage.removeItem(STORE);for(const key of ['sched','phrases','size'])localStorage.removeItem(key);}catch{}
+    state=validate(state);saveChanges();drawSchedule();category='Needs';drawCategories();drawPhrases();applySettings();$('data-status').textContent='Steady data cleared and sample tools restored.';
+  });
+  applySettings();
+  if('serviceWorker' in navigator && location.protocol!=='file:')window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{});});
+  window.addEventListener('beforeunload',()=>{if(voiceSupported)speechSynthesis.cancel();stopBreathing();timerStop();});
+  // Exposed for offline smoke tests only; no personal data is exposed.
+  window.SteadyTest={buildPlan,validate};
+})();
+
+</script>
+</body>
+</html>
