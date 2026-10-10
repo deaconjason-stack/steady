@@ -16,6 +16,9 @@ concurrency:
 jobs:
   deploy:
     name: Deploy static Steady site
+    # GitHub Pages must be enabled by an administrator first.
+    # Do not flood email when the repository is not configured for Pages.
+    if: vars.STEADY_PAGES_ENABLED == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
