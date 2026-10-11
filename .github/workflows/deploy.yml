@@ -10,27 +10,36 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: github-pages
   cancel-in-progress: true
 
 jobs:
   deploy:
-    name: Deploy static Steady site
-    # GitHub Pages must be enabled by an administrator first.
-    # Do not flood email when the repository is not configured for Pages.
-    if: vars.STEADY_PAGES_ENABLED == 'true'
+    name: Publish the Steady website
+    # A public repository works with GitHub Free. A private repository
+    # requires an eligible GitHub plan and STEADY_PAGES_ENABLED=true.
+    # Skip ineligible private repositories to avoid repeated failure emails.
+    if: ${{ github.event.repository.private == false || vars.STEADY_PAGES_ENABLED == 'true' }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      # Provision Pages when permissions and the repository plan allow it.
-      - uses: actions/configure-pages@v5
+      - name: Check out Steady
+        uses: actions/checkout@v4
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
         with:
           enablement: true
-      - uses: actions/upload-pages-artifact@v3
+      - name: Stage the website
+        run: |
+          mkdir -p _site
+          cp index.html sw.js _site/
+          touch _site/.nojekyll
+      - name: Upload the website
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: .
-      - id: deployment
+          path: _site
+      - name: Publish the website
+        id: deployment
         uses: actions/deploy-pages@v4
